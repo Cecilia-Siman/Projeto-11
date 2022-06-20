@@ -11,15 +11,21 @@ let tweets = [
         username: "bobesponja",
         tweet: "eu amo o hub",
         avatar:"https://upload.wikimedia.org/wikipedia/commons/9/9a/Gull_portrait_ca_usa.jpg",
+    },
+    {
+        username: "bobesponja",
+        tweet: "eu não",
+        avatar:"https://upload.wikimedia.org/wikipedia/commons/9/9a/Gull_portrait_ca_usa.jpg",
     }
 ];
 
 
 server.post('/sign-up',(request,response) => {
-    user = request.username;
-    picture = request.avatar;
+    //user = request.body.username;
+    //picture = request.body.avatar;
+
+    console.log(request.body);
     response.send("OK");
-    console.log(request.username);
 });
 
 server.get('/tweets',(request,response) => {
