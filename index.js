@@ -3,51 +3,46 @@ import cors from "cors";
 
 const server = express();
 server.use(cors());
+server.use(express.json());
 
 let user;
 let picture;
-let tweets = [
-    {
-        username: "bobesponja",
-        tweet: "eu amo o hub",
-        avatar:"https://upload.wikimedia.org/wikipedia/commons/9/9a/Gull_portrait_ca_usa.jpg",
-    },
-    {
-        username: "bobesponja",
-        tweet: "eu não",
-        avatar:"https://upload.wikimedia.org/wikipedia/commons/9/9a/Gull_portrait_ca_usa.jpg",
-    }
-];
-
+let tweets = [];
 
 server.post('/sign-up',(request,response) => {
-    //user = request.body.username;
-    //picture = request.body.avatar;
-
-    console.log(request.body);
+    user = request.body.username;
+    picture = request.body.avatar;
     response.send("OK");
 });
 
 server.get('/tweets',(request,response) => {
-    response.send(tweets);
+    if (tweets.length <=10){
+        let list = [];
+        for (let i=tweets.length-1;i>=0;i--){
+            list.push(tweets[i]);
+        }
+        response.send(list);
+    }
+    else{
+        let list = [];
+        for (let i=1;i<=10;i++){
+            let indice = tweets.length - i;
+            list.push (tweets[indice]);
+        }
+        response.send(list);
+    }
+    
 });
 
 server.post('/tweets',(request,response) => {
-    let text = request.tweet;
+    let text = request.body.tweet;
     let obj = {
         username:user,
         tweet:text,
         avatar:picture,
     }  
     tweets.push(obj);
-    response.send(tweets);
+    response.send("OK");
 });
-
-
-
-server.get('/teste',(request,response) => {
-    response.send("teste");
-});
-
 
 server.listen(5000);
